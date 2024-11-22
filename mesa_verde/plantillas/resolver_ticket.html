@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resolver Ticket</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Mesa de Ayuda FESC</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/nuevo_empleado/">Registrar Empleado</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/nuevo_tecnico/">Registrar Técnico</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/nueva_peticion/">Nueva Petición</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/asignar_ticket/">Asignar Ticket</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>    
+    <div class="container mt-5">
+        <h1>Resolver Ticket</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_peticion" class="form-label">Id petición:</label>
+                <input type="text" id="id_peticion" class="form-control" value="{{ peticion.id_peticion }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción:</label>
+                <textarea id="descripcion" class="form-control" readonly>{{ peticion.descripcion }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="prioridad" class="form-label">Prioridad:</label>
+                <input type="text" id="prioridad" class="form-control" value="{{ peticion.prioridad }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="area" class="form-label">Área:</label>
+                <input type="text" id="area" class="form-control" value="{{ peticion.area }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="fecha" class="form-label">Fecha:</label>
+                <input type="text" id="fecha" class="form-control" value="{{ peticion.fecha }}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado:</label>
+                <select name="estado" id="estado" class="form-control">
+                    <option value="En proceso" {% if peticion.status == "En proceso" %}selected{% endif %}>En proceso</option>
+                    <option value="Testeo" {% if peticion.status == "Testeo" %}selected{% endif %}>Testeo</option>
+                    <option value="Solucionado" {% if peticion.status == "Solucionado" %}selected{% endif %}>Solucionado</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="solucion" class="form-label">Solución:</label>
+                <textarea name="solucion" id="solucion" class="form-control">{{ peticion.solucion }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

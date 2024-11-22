@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignar Ticket</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Mesa de Ayuda FESC</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="/nuevo_empleado/">Registrar Empleado</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/nuevo_tecnico/">Registrar Técnico</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/nueva_peticion/">Nueva Petición</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/asignar_ticket/">Asignar Ticket</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>        
+    <div class="container mt-5">
+        <h1 class="text-center">Bienvenido Técnico</h1>
+        <h2 class="mt-4 text-center">Tickets por hacer</h2>
+    
+        <table class="table table-striped table-bordered mt-4">
+            <thead class="table-success">
+                <tr>
+                    <th>Id</th>
+                    <th>Descripción</th>
+                    <th>Área</th>
+                    <th>Fecha</th>
+                    <th>Estatus</th>
+                    <th>Solicitante</th>
+                    <th>Imagen</th> <!-- Nueva columna -->
+                    <th>Atender</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for peticion in peticiones %}
+                <tr>
+                    <td>{{ peticion.id_peticion }}</td>
+                    <td>{{ peticion.descripcion }}</td>
+                    <td>{{ peticion.area }}</td>
+                    <td>{{ peticion.fecha }}</td>
+                    <td>{{ peticion.status }}</td>
+                    <td>{{ peticion.empleado_peticion.nombre }}</td>
+                    <td>
+                        {% if peticion.imagen %}
+                            <img src="{{ peticion.imagen.url }}" alt="Imagen del Ticket" class="img-thumbnail" style="max-width: 100px; max-height: 100px;">
+                        {% else %}
+                            Sin imagen
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'resolver_ticket' peticion.id_peticion %}" class="btn btn-link">Resolver</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
